@@ -15,7 +15,6 @@ class CountryBase(BaseModel):
 class CountryResponse(CountryBase):
     id: int
 
-
 class GenreBase(BaseModel):
     name: Optional[str] = None
 
@@ -79,6 +78,14 @@ class MovieUpdate(BaseModel):
     status: Optional[MovieStatusEnum] = None
     budget: Optional[float] = Field(None, ge=0)
     revenue: Optional[float] = Field(None, ge=0)
+
+    @field_validator("date")
+    @classmethod
+    def date_not_too_far(cls, v: datetime.date) -> datetime.date:
+        max_date = datetime.date.today() + datetime.timedelta(days=365)
+        if v > max_date:
+            raise ValueError('The date must not be more than one year in the future.')
+        return v
 
 
 class MovieListResponseSchema(BaseModel):
