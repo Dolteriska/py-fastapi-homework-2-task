@@ -184,6 +184,6 @@ async def update_movie(movie: MovieUpdate, movie_id: int, db: AsyncSession = Dep
         await db.commit()
         await db.refresh(db_movie)
         return {"detail": "Movie updated successfully."}
-    except Exception as e:
+    except Exception:
         await db.rollback()
         raise HTTPException(status_code=400, detail="Invalid input data.")

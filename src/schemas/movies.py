@@ -15,6 +15,7 @@ class CountryBase(BaseModel):
 class CountryResponse(CountryBase):
     id: int
 
+
 class GenreBase(BaseModel):
     name: Optional[str] = None
 
